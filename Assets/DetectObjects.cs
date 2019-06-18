@@ -1,11 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
 using Grpc.Core;
 using Tensorflow.Serving;
-
 
 public class DetectObjects : MonoBehaviour
 {
@@ -47,12 +46,6 @@ public class DetectObjects : MonoBehaviour
             // Run the prediction
             var predictResponse = client.Predict(request);
             Debug.Log(predictResponse.Outputs["num_detections"]);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
 }
