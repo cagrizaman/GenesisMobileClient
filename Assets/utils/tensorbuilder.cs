@@ -19,14 +19,8 @@ public class TensorBuilder
         return tensor;
     }
 
-    public static TensorProto CreateTensorFromImage(Color32[] pixels, int height, int width, float revertsBits = 1.0f)
-    {
 
-        return CreateTensorFromImage(pixels, revertsBits, height, width, 3);
-
-    }
-
-    public static TensorProto CreateTensorFromImage(Color32[] pixels, float revertsBits, int height, int width, int channels)
+    public static TensorProto CreateTensorFromImage(Color32[] pixels,  int height, int width, int channels)
     {
         var imageFeatureShape = new TensorShapeProto();
 
@@ -36,7 +30,7 @@ public class TensorBuilder
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = channels });
 
         var imageTensorBuilder = new TensorProto();
-        imageTensorBuilder.Dtype = DataType.DtFloat;
+        imageTensorBuilder.Dtype = DataType.DtUint8;
         imageTensorBuilder.TensorShape = imageFeatureShape;
 
         var px = 0;
@@ -45,9 +39,42 @@ public class TensorBuilder
             for (int j = 0; j < width; ++j)
             {
                 var color = pixels[px++];
-                imageTensorBuilder.FloatVal.Add(color.r/revertsBits);
-                imageTensorBuilder.FloatVal.Add(color.g / revertsBits);
-                imageTensorBuilder.FloatVal.Add(color.b / revertsBits);
+                imageTensorBuilder.IntVal.Add(color.r);
+                imageTensorBuilder.IntVal.Add(color.g);
+                imageTensorBuilder.IntVal.Add(color.b);
+            }
+        }
+
+        return imageTensorBuilder;
+    }
+
+    public static TensorProto CreateTensorFromBuffer(IntPtr pixelBuffer, int height, int width, int channels)
+    {
+        var imageFeatureShape = new TensorShapeProto();
+
+        imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = 1 });
+        imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = height });
+        imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = width });
+        imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = channels });
+
+        var imageTensorBuilder = new TensorProto();
+        imageTensorBuilder.Dtype = DataType.DtUint8;
+        imageTensorBuilder.TensorShape = imageFeatureShape;
+
+
+        unsafe
+        {
+            for (int i = 0; i < height; i++)
+            {
+                byte* pI = (byte*)pixelBuffer.ToPointer() + i * width * channels; //pointer to start of row
+                for (int j = 0; j < width; j++)
+                {
+
+                    imageTensorBuilder.IntVal.Add(pI[j * channels]);
+                    imageTensorBuilder.IntVal.Add(pI[j * channels+1]);
+                    imageTensorBuilder.IntVal.Add(pI[j * channels+2]);
+
+                }
             }
         }
 
@@ -65,7 +92,7 @@ public class TensorBuilder
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = channels });
 
         var imageTensorBuilder = new TensorProto();
-        imageTensorBuilder.Dtype = DataType.DtFloat;
+        imageTensorBuilder.Dtype = DataType.DtUint8;
         imageTensorBuilder.TensorShape = imageFeatureShape;
 
         for (int i = 0; i < height; ++i)
@@ -74,7 +101,7 @@ public class TensorBuilder
             {
                 for (int c = 0; c < channels; c++)
                 {
-                    imageTensorBuilder.FloatVal.Add(dimArray[i][j][c] / revertsBits);
+                    imageTensorBuilder.IntVal.Add(dimArray[i][j][c]);
                 }
             }
         }

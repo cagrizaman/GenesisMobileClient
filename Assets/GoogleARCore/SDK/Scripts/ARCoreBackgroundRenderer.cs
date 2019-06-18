@@ -188,9 +188,6 @@ namespace GoogleARCore
              
             BackgroundMaterial.SetTexture(mainTexVar, Frame.CameraImage.Texture);
 
-            //Get RGB Array
-            Color32[] pixels = Texture2D.CreateExternalTexture(Frame.CameraImage.Texture.width, Frame.CameraImage.Texture.height,
-                TextureFormat.RGB24, false, false, Frame.CameraImage.Texture.GetNativeTexturePtr()).GetPixels32();
 
             var uvQuad = Frame.CameraImage.TextureDisplayUvs;
             BackgroundMaterial.SetVector(

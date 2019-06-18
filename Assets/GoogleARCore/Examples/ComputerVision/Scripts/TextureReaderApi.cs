@@ -103,6 +103,7 @@ namespace GoogleARCore.Examples.ComputerVision
         public IntPtr AcquireFrame(int bufferIndex, ref int bufferSize)
         {
             IntPtr pixelBuffer = ExternApi.TextureReader_acquireFrame(bufferIndex, ref bufferSize);
+            Debug.Log(bufferSize);
             return pixelBuffer;
         }
 
