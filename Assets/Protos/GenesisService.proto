@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "cagriZaman.services";
+
+service GenesisSimulator {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHelloAgain (HelloRequest) returns (HelloReply){}
+  rpc GetCameraTransform(CameraRequest) returns(CameraReply){}
+  rpc UpdateCamera(CameraUpdate) returns (Confirmation){}
+  rpc RecordPoints(stream Point) returns (Confirmation){}
+  rpc LoadMap(Empty) returns (stream Point){}
+  rpc SaveMap(Empty) returns (Confirmation){}
+  
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+
+message CameraRequest{
+    string message=1;
+}
+message CameraReply{
+  float x=1;
+  float y=2;
+  float z=3;
+  float q=4;
+  float w=5;
+  float r=6;
+  float t=7;
+}
+
+message CameraUpdate{
+  float x=1;
+  float y=2;
+  float z=3;
+  float q=4;
+  float w=5;
+  float r=6;
+  float t=7;
+}
+
+
+message Point{
+  float x=1;
+  float y=2;
+  float z=3;
+  int32 id=4;
+  float confidence=5;
+}
+message Confirmation{
+  string message=1;
+}
+
+message Empty{
+}
