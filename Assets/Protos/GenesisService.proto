@@ -10,9 +10,15 @@ service GenesisSimulator {
   rpc GetCameraTransform(CameraRequest) returns(CameraReply){}
   rpc UpdateCamera(CameraUpdate) returns (Confirmation){}
   rpc RecordPoints(stream Point) returns (Confirmation){}
+  rpc SendSinglePoint (Point) returns (Confirmation){}
   rpc LoadMap(Empty) returns (stream Point){}
   rpc SaveMap(Empty) returns (Confirmation){}
+  rpc AddPlaneObject(DetectionPlane) returns (Confirmation){}
+  rpc AddPointObject(DetectionPoint) returns (Confirmation){}
+  rpc AddPointList(PointList) returns (Confirmation){}
+  rpc AddDetectionPointList(DetectionPointList) returns (Confirmation){}
   
+    
 }
 
 // The request message containing the user's name.
@@ -55,6 +61,55 @@ message Point{
   float z=3;
   int32 id=4;
   float confidence=5;
+  uint32 color=6;
+   
+}
+
+message Position{
+  float x=1;
+  float y=2;
+  float z=3;
+}
+
+message ProtoQuaternion{
+  float x=1;
+  float y=2;
+  float z=3;
+  float w=4;
+}
+
+message Extent{
+  float x=1;
+  float y=2;
+
+}
+
+message PointList{
+  repeated Point points=1;
+}
+
+message DetectionPointList{
+  repeated DetectionPoint dpoints=2;
+}
+message DetectionPoint{
+  string objectClass=1;
+  float confidence=2;
+  Position pos=3;
+  ProtoQuaternion rot=4;
+  Extent ex=5;
+  float hitId=6;
+  float hitOffset=7;
+}
+
+message DetectionPlane{
+  string objectClass=1;
+  float confidence=2;
+  Position pos=3;
+  ProtoQuaternion rot=4;
+  Extent ex=5;
+  float hitId=6;
+  float hitOffset=7;
+  Position hitPos=8;
 }
 message Confirmation{
   string message=1;

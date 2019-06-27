@@ -158,7 +158,11 @@ PrefabInstance:
     - target: {fileID: 114876698896786350, guid: c10877f7cd5764de18d46d7b777d1faa,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4497055787654456, guid: c10877f7cd5764de18d46d7b777d1faa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c10877f7cd5764de18d46d7b777d1faa, type: 3}
@@ -212,7 +216,7 @@ PrefabInstance:
     - target: {fileID: 114747870037459092, guid: 26558ae1d2e7243728486d789f984c53,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26558ae1d2e7243728486d789f984c53, type: 3}
@@ -570,6 +574,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304627b87c4b17cb4a5564bb7c490eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  labels: {fileID: 4900000, guid: b9a269d29b6aebb77bce83cb84a2e5dc, type: 3}
 --- !u!114 &1012547648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,7 +591,7 @@ MonoBehaviour:
   host: 18.90.5.7
   port: 50051
   connected: 1
---- !u!114 &1012547649
+--- !u!114 &1012547651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -594,7 +600,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1012547646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cbc3d06371d597ad9087ac4a95b0067, type: 3}
+  m_Script: {fileID: 11500000, guid: aa54f2015d30a558dace5552395ddf10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1117147210
@@ -610,7 +616,7 @@ GameObject:
   - component: {fileID: 1117147213}
   - component: {fileID: 1117147212}
   m_Layer: 5
-  m_Name: Recognize
+  m_Name: UpdateServer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,8 +682,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1012547647}
-        m_MethodName: recognize
+      - m_Target: {fileID: 1012547648}
+        m_MethodName: sendAsync
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1146,7 +1152,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2083512464}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c669a4cc43174caea1a3748b76f2652, type: 3}
   m_Name: 

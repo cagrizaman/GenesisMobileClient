@@ -19,6 +19,10 @@ public static partial class GenesisSimulator
   static readonly grpc::Marshaller<global::Confirmation> __Marshaller_Confirmation = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Confirmation.Parser.ParseFrom);
   static readonly grpc::Marshaller<global::Point> __Marshaller_Point = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Point.Parser.ParseFrom);
   static readonly grpc::Marshaller<global::Empty> __Marshaller_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Empty.Parser.ParseFrom);
+  static readonly grpc::Marshaller<global::DetectionPlane> __Marshaller_DetectionPlane = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::DetectionPlane.Parser.ParseFrom);
+  static readonly grpc::Marshaller<global::DetectionPoint> __Marshaller_DetectionPoint = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::DetectionPoint.Parser.ParseFrom);
+  static readonly grpc::Marshaller<global::PointList> __Marshaller_PointList = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PointList.Parser.ParseFrom);
+  static readonly grpc::Marshaller<global::DetectionPointList> __Marshaller_DetectionPointList = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::DetectionPointList.Parser.ParseFrom);
 
   static readonly grpc::Method<global::HelloRequest, global::HelloReply> __Method_SayHello = new grpc::Method<global::HelloRequest, global::HelloReply>(
       grpc::MethodType.Unary,
@@ -55,6 +59,13 @@ public static partial class GenesisSimulator
       __Marshaller_Point,
       __Marshaller_Confirmation);
 
+  static readonly grpc::Method<global::Point, global::Confirmation> __Method_SendSinglePoint = new grpc::Method<global::Point, global::Confirmation>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "SendSinglePoint",
+      __Marshaller_Point,
+      __Marshaller_Confirmation);
+
   static readonly grpc::Method<global::Empty, global::Point> __Method_LoadMap = new grpc::Method<global::Empty, global::Point>(
       grpc::MethodType.ServerStreaming,
       __ServiceName,
@@ -67,6 +78,34 @@ public static partial class GenesisSimulator
       __ServiceName,
       "SaveMap",
       __Marshaller_Empty,
+      __Marshaller_Confirmation);
+
+  static readonly grpc::Method<global::DetectionPlane, global::Confirmation> __Method_AddPlaneObject = new grpc::Method<global::DetectionPlane, global::Confirmation>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "AddPlaneObject",
+      __Marshaller_DetectionPlane,
+      __Marshaller_Confirmation);
+
+  static readonly grpc::Method<global::DetectionPoint, global::Confirmation> __Method_AddPointObject = new grpc::Method<global::DetectionPoint, global::Confirmation>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "AddPointObject",
+      __Marshaller_DetectionPoint,
+      __Marshaller_Confirmation);
+
+  static readonly grpc::Method<global::PointList, global::Confirmation> __Method_AddPointList = new grpc::Method<global::PointList, global::Confirmation>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "AddPointList",
+      __Marshaller_PointList,
+      __Marshaller_Confirmation);
+
+  static readonly grpc::Method<global::DetectionPointList, global::Confirmation> __Method_AddDetectionPointList = new grpc::Method<global::DetectionPointList, global::Confirmation>(
+      grpc::MethodType.Unary,
+      __ServiceName,
+      "AddDetectionPointList",
+      __Marshaller_DetectionPointList,
       __Marshaller_Confirmation);
 
   /// <summary>Service descriptor</summary>
@@ -110,12 +149,37 @@ public static partial class GenesisSimulator
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
 
+    public virtual global::System.Threading.Tasks.Task<global::Confirmation> SendSinglePoint(global::Point request, grpc::ServerCallContext context)
+    {
+      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    }
+
     public virtual global::System.Threading.Tasks.Task LoadMap(global::Empty request, grpc::IServerStreamWriter<global::Point> responseStream, grpc::ServerCallContext context)
     {
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
 
     public virtual global::System.Threading.Tasks.Task<global::Confirmation> SaveMap(global::Empty request, grpc::ServerCallContext context)
+    {
+      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    }
+
+    public virtual global::System.Threading.Tasks.Task<global::Confirmation> AddPlaneObject(global::DetectionPlane request, grpc::ServerCallContext context)
+    {
+      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    }
+
+    public virtual global::System.Threading.Tasks.Task<global::Confirmation> AddPointObject(global::DetectionPoint request, grpc::ServerCallContext context)
+    {
+      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    }
+
+    public virtual global::System.Threading.Tasks.Task<global::Confirmation> AddPointList(global::PointList request, grpc::ServerCallContext context)
+    {
+      throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    }
+
+    public virtual global::System.Threading.Tasks.Task<global::Confirmation> AddDetectionPointList(global::DetectionPointList request, grpc::ServerCallContext context)
     {
       throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     }
@@ -245,6 +309,22 @@ public static partial class GenesisSimulator
     {
       return CallInvoker.AsyncClientStreamingCall(__Method_RecordPoints, null, options);
     }
+    public virtual global::Confirmation SendSinglePoint(global::Point request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return SendSinglePoint(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Confirmation SendSinglePoint(global::Point request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_SendSinglePoint, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> SendSinglePointAsync(global::Point request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return SendSinglePointAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> SendSinglePointAsync(global::Point request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_SendSinglePoint, null, options, request);
+    }
     public virtual grpc::AsyncServerStreamingCall<global::Point> LoadMap(global::Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
     {
       return LoadMap(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -269,6 +349,70 @@ public static partial class GenesisSimulator
     {
       return CallInvoker.AsyncUnaryCall(__Method_SaveMap, null, options, request);
     }
+    public virtual global::Confirmation AddPlaneObject(global::DetectionPlane request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddPlaneObject(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Confirmation AddPlaneObject(global::DetectionPlane request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_AddPlaneObject, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddPlaneObjectAsync(global::DetectionPlane request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddPlaneObjectAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddPlaneObjectAsync(global::DetectionPlane request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_AddPlaneObject, null, options, request);
+    }
+    public virtual global::Confirmation AddPointObject(global::DetectionPoint request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddPointObject(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Confirmation AddPointObject(global::DetectionPoint request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_AddPointObject, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddPointObjectAsync(global::DetectionPoint request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddPointObjectAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddPointObjectAsync(global::DetectionPoint request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_AddPointObject, null, options, request);
+    }
+    public virtual global::Confirmation AddPointList(global::PointList request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddPointList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Confirmation AddPointList(global::PointList request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_AddPointList, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddPointListAsync(global::PointList request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddPointListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddPointListAsync(global::PointList request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_AddPointList, null, options, request);
+    }
+    public virtual global::Confirmation AddDetectionPointList(global::DetectionPointList request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddDetectionPointList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual global::Confirmation AddDetectionPointList(global::DetectionPointList request, grpc::CallOptions options)
+    {
+      return CallInvoker.BlockingUnaryCall(__Method_AddDetectionPointList, null, options, request);
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddDetectionPointListAsync(global::DetectionPointList request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+    {
+      return AddDetectionPointListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+    }
+    public virtual grpc::AsyncUnaryCall<global::Confirmation> AddDetectionPointListAsync(global::DetectionPointList request, grpc::CallOptions options)
+    {
+      return CallInvoker.AsyncUnaryCall(__Method_AddDetectionPointList, null, options, request);
+    }
     /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
     protected override GenesisSimulatorClient NewInstance(ClientBaseConfiguration configuration)
     {
@@ -286,8 +430,13 @@ public static partial class GenesisSimulator
         .AddMethod(__Method_GetCameraTransform, serviceImpl.GetCameraTransform)
         .AddMethod(__Method_UpdateCamera, serviceImpl.UpdateCamera)
         .AddMethod(__Method_RecordPoints, serviceImpl.RecordPoints)
+        .AddMethod(__Method_SendSinglePoint, serviceImpl.SendSinglePoint)
         .AddMethod(__Method_LoadMap, serviceImpl.LoadMap)
-        .AddMethod(__Method_SaveMap, serviceImpl.SaveMap).Build();
+        .AddMethod(__Method_SaveMap, serviceImpl.SaveMap)
+        .AddMethod(__Method_AddPlaneObject, serviceImpl.AddPlaneObject)
+        .AddMethod(__Method_AddPointObject, serviceImpl.AddPointObject)
+        .AddMethod(__Method_AddPointList, serviceImpl.AddPointList)
+        .AddMethod(__Method_AddDetectionPointList, serviceImpl.AddDetectionPointList).Build();
   }
 
   /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -301,8 +450,13 @@ public static partial class GenesisSimulator
     serviceBinder.AddMethod(__Method_GetCameraTransform, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::CameraRequest, global::CameraReply>(serviceImpl.GetCameraTransform));
     serviceBinder.AddMethod(__Method_UpdateCamera, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::CameraUpdate, global::Confirmation>(serviceImpl.UpdateCamera));
     serviceBinder.AddMethod(__Method_RecordPoints, serviceImpl == null ? null : new grpc::ClientStreamingServerMethod<global::Point, global::Confirmation>(serviceImpl.RecordPoints));
+    serviceBinder.AddMethod(__Method_SendSinglePoint, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Point, global::Confirmation>(serviceImpl.SendSinglePoint));
     serviceBinder.AddMethod(__Method_LoadMap, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Empty, global::Point>(serviceImpl.LoadMap));
     serviceBinder.AddMethod(__Method_SaveMap, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Empty, global::Confirmation>(serviceImpl.SaveMap));
+    serviceBinder.AddMethod(__Method_AddPlaneObject, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::DetectionPlane, global::Confirmation>(serviceImpl.AddPlaneObject));
+    serviceBinder.AddMethod(__Method_AddPointObject, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::DetectionPoint, global::Confirmation>(serviceImpl.AddPointObject));
+    serviceBinder.AddMethod(__Method_AddPointList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PointList, global::Confirmation>(serviceImpl.AddPointList));
+    serviceBinder.AddMethod(__Method_AddDetectionPointList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::DetectionPointList, global::Confirmation>(serviceImpl.AddDetectionPointList));
   }
 
 }

@@ -20,28 +20,28 @@ public class TensorBuilder
     }
 
 
-    public static TensorProto CreateTensorFromImage(Color32[] pixels,  int height, int width, int channels)
+    public static TensorProto CreateTensorFromImage(uint[] pixels, int height, int width, int channels)
     {
         var imageFeatureShape = new TensorShapeProto();
 
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = 1 });
-        imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = height });
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = width });
+        imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = height });
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = channels });
 
         var imageTensorBuilder = new TensorProto();
         imageTensorBuilder.Dtype = DataType.DtUint8;
         imageTensorBuilder.TensorShape = imageFeatureShape;
-
+        
         var px = 0;
-        for (int i = 0; i < height; ++i)
+        for (int i = 0; i < width; ++i)
         {
-            for (int j = 0; j < width; ++j)
+            for (int j = 0; j < height; ++j)
             {
-                var color = pixels[px++];
-                imageTensorBuilder.IntVal.Add(color.r);
-                imageTensorBuilder.IntVal.Add(color.g);
-                imageTensorBuilder.IntVal.Add(color.b);
+                var color = pixels[i +(j*width)];
+                imageTensorBuilder.IntVal.Add((byte)(0xFF & (color >> 16)));
+                imageTensorBuilder.IntVal.Add((byte)( 0xFF & (color >> 8)));
+                imageTensorBuilder.IntVal.Add((byte)(0xFF & (color >> 0)));
             }
         }
 
@@ -51,7 +51,6 @@ public class TensorBuilder
     public static TensorProto CreateTensorFromBuffer(IntPtr pixelBuffer, int height, int width, int channels)
     {
         var imageFeatureShape = new TensorShapeProto();
-
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = 1 });
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = height });
         imageFeatureShape.Dim.Add(new TensorShapeProto.Types.Dim() { Size = width });
@@ -69,10 +68,9 @@ public class TensorBuilder
                 byte* pI = (byte*)pixelBuffer.ToPointer() + i * width * channels; //pointer to start of row
                 for (int j = 0; j < width; j++)
                 {
-
                     imageTensorBuilder.IntVal.Add(pI[j * channels]);
-                    imageTensorBuilder.IntVal.Add(pI[j * channels+1]);
-                    imageTensorBuilder.IntVal.Add(pI[j * channels+2]);
+                    imageTensorBuilder.IntVal.Add(pI[j * channels + 1]);
+                    imageTensorBuilder.IntVal.Add(pI[j * channels + 2]);
 
                 }
             }
