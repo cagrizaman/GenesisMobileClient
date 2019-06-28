@@ -123,10 +123,10 @@ public class DetectObjects : MonoBehaviour
     {
         points = new List<PointCloudPoint>();
 
-        var ymin = cam.pixelHeight * bbox[0];
-        var xmin = cam.pixelWidth * bbox[1];
-        var ymax = cam.pixelHeight * bbox[2];
-        var xmax = cam.pixelWidth * bbox[3];
+        var ymax = cam.pixelHeight * (1-bbox[0]);
+        var xmax = cam.pixelWidth * (1-bbox[1]);
+        var ymin = cam.pixelHeight * (1-bbox[2]);
+        var xmin = cam.pixelWidth * (1-bbox[3]);
         Vector3 centroid = new Vector3(0, 0, 0);
         if (Frame.PointCloud.PointCount > 0)
         {

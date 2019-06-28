@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using Grpc.Core;
 using GoogleARCore;
 public class GrpcClient : MonoBehaviour
@@ -11,10 +12,10 @@ public class GrpcClient : MonoBehaviour
     public string host;
     public string port;
     public bool connected = false;
-
+    private bool isCameraStreaming = false;
     private List<int> pointIds;
     private static Dictionary<int, Point> pointCache;
-    private static Dictionary<int,DetectionPoint> detectionCache;
+    private static Dictionary<int, DetectionPoint> detectionCache;
 
     private uint[] colors;
 
@@ -26,6 +27,7 @@ public class GrpcClient : MonoBehaviour
 
     private bool isCallComplete = true;
 
+    public Text cameraButtonText;
     private Camera cam;
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,7 @@ public class GrpcClient : MonoBehaviour
         pointIds = new List<int>();
         pointList = new List<Point>();
         pointCache = new Dictionary<int, Point>();
+        detectionCache = new Dictionary<int, DetectionPoint>();
         channel = new Channel(host + ":" + port, ChannelCredentials.Insecure);
         client = new GenesisSimulator.GenesisSimulatorClient(channel);
         cam = GetComponent<Camera>();
@@ -158,7 +161,10 @@ public class GrpcClient : MonoBehaviour
                 T = transform.rotation.z
             };
 
-            var reply = client.UpdateCamera(update);
+            if (isCameraStreaming)
+            {
+                var reply = client.UpdateCamera(update);
+            }
             if (Session.Status != SessionStatus.Tracking)
                 return;
 
@@ -223,10 +229,13 @@ public class GrpcClient : MonoBehaviour
     }
 
 
-
+    public void changeCameraState(){
+        isCameraStreaming=!isCameraStreaming;
+        cameraButtonText.text=isCameraStreaming? "Disconnect":"Stream Camera";
+    }
     public async void sendAsync()
     {
-        BroadcastMessage("SessionComplete", true);
+        //BroadcastMessage("SessionComplete", true);
         isCallComplete = false;
         await sendCachedPoints();
     }
@@ -299,10 +308,11 @@ public class GrpcClient : MonoBehaviour
     }
 
 
-
+   
     public async Task sendCachedPoints()
     {
         PointList plist = new PointList();
+        DetectionPointList dplist = new DetectionPointList();
         foreach (var p in pointCache)
         {
             plist.Points.Add(p.Value);
@@ -317,6 +327,26 @@ public class GrpcClient : MonoBehaviour
             Debug.Log("RPC failed");
             throw;
         }
+
+        foreach (var dp in detectionCache)
+        {
+            dplist.Dpoints.Add(dp.Value);
+        }
+
+        try
+        {
+            var result = client.AddDetectionPointList(dplist);
+        }
+        catch (RpcException e)
+        {
+            Debug.Log("RPC failed");
+            throw;
+        }
+        pointCache.Clear();
+        detectionCache.Clear();
+        isCallComplete = true;
+
+
         // try
         // {
         //     using (var call = client.RecordPoints())
